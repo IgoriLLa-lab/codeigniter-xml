@@ -1,0 +1,38 @@
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: _docker/Dockerfile
+    container_name: codeigniter-xml
+    ports:
+      - "8081:80"
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    ports:
+      - "5435:5432"
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
