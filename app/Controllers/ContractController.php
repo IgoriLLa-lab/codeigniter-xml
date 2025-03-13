@@ -29,7 +29,9 @@ class ContractController extends Controller
      */
     public function index(): string
     {
-        $data['contracts'] = $this->contractModel->findAll();
+        $data['contracts'] = $this->contractModel
+            ->orderBy('created_at', 'DESC')
+            ->findAll();
         return view('contract_list', $data);
     }
 
@@ -42,14 +44,16 @@ class ContractController extends Controller
     }
 
     /**
-     * @return RedirectResponse
      * @throws ReflectionException
      */
     public function store(): RedirectResponse
     {
         $data = $this->getContractDataFromRequest();
+        $validationRules = new ContractValidationRules();
 
-        if (!$this->validate(ContractValidationRules::getValidationRules())) {
+        $this->validation->setRules($validationRules->getValidationRules());
+
+        if (!$this->validation->withRequest($this->request)->run()) {
             return redirect()->back()->withInput()->with('errors', $this->validation->getErrors());
         }
 
@@ -85,7 +89,11 @@ class ContractController extends Controller
     {
         $data = $this->getContractDataFromRequest();
 
-        if (!$this->validate(ContractValidationRules::getValidationRules())) {
+        $validationRules = new ContractValidationRules();
+
+        $this->validation->setRules($validationRules->getValidationRules());
+
+        if (!$this->validation->withRequest($this->request)->run()) {
             return redirect()->back()->withInput()->with('errors', $this->validation->getErrors());
         }
 

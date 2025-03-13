@@ -12,10 +12,10 @@ class ContractValidationRules
         return [
             'reportingEntityID' => [
                 'label' => 'reportingEntityID',
-                'rules' => 'required|regex_match[/^[A-Z][0-9]{7}[A-Z]\.[A-Z]{2}$/]',
+                'rules' => 'required|validateEntityId[reportingEntityType]',
                 'errors' => [
                     'required' => 'Поле reportingEntityID обязательно.',
-                    'regex_match' => 'Формат reportingEntityID должен быть как B0001064H.DE',
+                    'validateEntityId' => 'Некорректный формат reportingEntityID для выбранного типа.',
                 ]
             ],
             'reportingEntityType' => [
@@ -36,10 +36,10 @@ class ContractValidationRules
             ],
             'idOfMarketParticipant' => [
                 'label' => 'idOfMarketParticipant',
-                'rules' => 'required|regex_match[/^[A-Z][0-9]{8}\.[A-Z]{2}$/]',
+                'rules' => 'required|validateEntityId[idOfMarketParticipantType]',
                 'errors' => [
                     'required' => 'Поле idOfMarketParticipant обязательно.',
-                    'regex_match' => 'Формат idOfMarketParticipant должен быть как A00023777.DE.',
+                    'validateEntityId' => 'Неверный формат idOfMarketParticipant для выбранного типа {param}.'
                 ]
             ],
             'idOfMarketParticipantType' => [
@@ -52,10 +52,10 @@ class ContractValidationRules
             ],
             'otherMarketParticipant' => [
                 'label' => 'otherMarketParticipant',
-                'rules' => 'required|regex_match[/^[A-Z][0-9]{8}\.[A-Z]{2}$/]',
+                'rules' => 'required|validateEntityId[otherMarketParticipantType]',
                 'errors' => [
                     'required' => 'Поле otherMarketParticipant обязательно.',
-                    'regex_match' => 'Формат otherMarketParticipant должен быть как A00113777.DE.',
+                    'validateEntityId' => 'Неверный формат otherMarketParticipant для выбранного типа {param}.'
                 ]
             ],
             'otherMarketParticipantType' => [
@@ -68,20 +68,19 @@ class ContractValidationRules
             ],
             'tradingCapacity' => [
                 'label' => 'tradingCapacity',
-                'rules' => 'required|exact_length[1]|regex_match[/^[A-Z]$/]',
+                'rules' => 'required|in_list[P,A]',
                 'errors' => [
                     'required' => 'Поле tradingCapacity обязательно.',
-                    'exact_length' => 'tradingCapacity должен быть длиной 1 символ.',
-                    'regex_match' => 'tradingCapacity должен быть одной заглавной буквой.'
+                    'in_list' => 'tradingCapacity может быть только значением "P" или "A".',
                 ]
             ],
             'buySellIndicator' => [
                 'label' => 'buySellIndicator',
-                'rules' => 'required|exact_length[1]|regex_match[/^[A-Z]$/]',
+                'rules' => 'required|in_list[B,S,C]',
                 'errors' => [
                     'required' => 'Поле buySellIndicator обязательно.',
-                    'exact_length' => 'buySellIndicator должен быть длиной 1 символ.',
-                    'regex_match' => 'buySellIndicator должен быть одной заглавной буквой.'
+                    'in_list' => 'buySellIndicator может быть только значением "B", "S" или "C".',
+
                 ]
             ],
             'contractId' => [
@@ -103,20 +102,18 @@ class ContractValidationRules
             ],
             'contractType' => [
                 'label' => 'contractType',
-                'rules' => 'required|exact_length[2]|regex_match[/^[A-Z]{2}$/]',
+                'rules' => 'required|in_list[SO,FW,FU,OP,OP_FW,OP_FU,OP_SW,SP,SW,OT]',
                 'errors' => [
                     'required' => 'Поле contractType обязательно.',
-                    'exact_length' => 'contractType должен быть длиной 2 символа.',
-                    'regex_match' => 'contractType должен быть двумя заглавными буквами.'
+                    'in_list' => 'contractType может быть только одним из допустимых значений: SO, FW, FU, OP, OP_FW, OP_FU, OP_SW, SP, SW, OT.',
                 ]
             ],
             'energyCommodity' => [
                 'label' => 'energyCommodity',
-                'rules' => 'required|exact_length[2]|regex_match[/^[A-Z]{2}$/]',
+                'rules' => 'required|in_list[EL,NG]',
                 'errors' => [
                     'required' => 'Поле energyCommodity обязательно.',
-                    'exact_length' => 'energyCommodity должен быть длиной 2 символа.',
-                    'regex_match' => 'energyCommodity должен быть двумя заглавными буквами.'
+                    'in_list' => 'energyCommodity может быть только одним из допустимых значений: EL, NG.',
                 ]
             ],
             'priceFormula' => [
@@ -146,38 +143,35 @@ class ContractValidationRules
             ],
             'volumeOptionalty' => [
                 'label' => 'volumeOptionalty',
-                'rules' => 'required|exact_length[1]|regex_match[/^[A-Z]$/]',
+                'rules' => 'required|in_list[V,F,M,C,O]',
                 'errors' => [
                     'required' => 'Поле volumeOptionalty обязательно.',
-                    'exact_length' => 'volumeOptionalty должен быть длиной 1 символ.',
-                    'regex_match' => 'volumeOptionalty должен быть одной заглавной буквой.'
+                    'in' => 'Поле volumeOptionalty должно содержать одно из следующих значений: V, F, M, C, O.'
                 ]
             ],
             'typeOfIndexPrice' => [
                 'label' => 'typeOfIndexPrice',
-                'rules' => 'required|exact_length[1]|regex_match[/^[A-Z]$/]',
+                'rules' => 'required|in_list[F,I,C,O]',
                 'errors' => [
                     'required' => 'Поле typeOfIndexPrice обязательно.',
-                    'exact_length' => 'typeOfIndexPrice должен быть длиной 1 символ.',
-                    'regex_match' => 'typeOfIndexPrice должен быть одной заглавной буквой.'
+                    'in' => 'typeOfIndexPrice должно быть одним из следующих значений: F, I, C, O.'
                 ]
             ],
             'fixingIndex' => [
                 'label' => 'fixingIndex',
-                'rules' => 'required|max_length[150]|regex_match[/^[A-Za-z0-9\s]+$/]',
+                'rules' => 'required|max_length[150]|regex_match[/^[A-Za-z0-9_ \-]+$/]',
                 'errors' => [
                     'required' => 'Поле fixingIndex обязательно.',
                     'max_length' => 'fixingIndex не должен превышать 150 символов.',
-                    'regex_match' => 'fixingIndex может содержать только буквы, цифры и пробелы.'
+                    'regex_match' => 'fixingIndex может содержать только латинские буквы, цифры, пробел, подчёркивание и дефис.'
                 ]
             ],
             'fixingIndexType' => [
                 'label' => 'fixingIndexType',
-                'rules' => 'required|exact_length[2]|regex_match[/^[A-Z]{2}$/]',
+                'rules' => 'required|in_list[SO,FW,FU,OP,OP_FW,OP_FU,OP_SW,SP,SW,OT]',
                 'errors' => [
                     'required' => 'Поле fixingIndexType обязательно.',
-                    'exact_length' => 'fixingIndexType должен быть длиной 2 символа.',
-                    'regex_match' => 'fixingIndexType должен быть двумя заглавными буквами.'
+                    'in_list' => 'fixingIndexType должен быть одним из: SO, FW, FU, OP, OP_FW, OP_FU, OP_SW, SP, SW, OT.'
                 ]
             ],
             'fixingIndexSource' => [
@@ -215,16 +209,15 @@ class ContractValidationRules
             ],
             'settlementMethod' => [
                 'label' => 'settlementMethod',
-                'rules' => 'required|exact_length[1]|regex_match[/^[A-Z]$/]',
+                'rules' => 'required|in_list[P,C,O]',
                 'errors' => [
                     'required' => 'Поле settlementMethod обязательно.',
-                    'exact_length' => 'settlementMethod должен быть длиной 1 символ.',
-                    'regex_match' => 'settlementMethod должен быть одной заглавной буквой.'
+                    'in_list' => 'settlementMethod должен быть одним из следующих значений: P, C, O.'
                 ]
             ],
             'deliveryPointOrZone' => [
                 'label' => 'deliveryPointOrZone',
-                'rules' => 'required|exact_length[16]|regex_match[/^[0-9]{2}Y[A-Z]{2}-[A-Z]{2}-------[0-9]$/]',
+                'rules' => 'required|exact_length[16]|regex_match[/^[0-9]{2}[XYZTWV][A-Z0-9]{13}$/]',
                 'errors' => [
                     'required' => 'Поле deliveryPointOrZone обязательно.',
                     'exact_length' => 'deliveryPointOrZone должен быть длиной 16 символов.',
@@ -249,22 +242,48 @@ class ContractValidationRules
             ],
             'loadType' => [
                 'label' => 'loadType',
-                'rules' => 'required|exact_length[2]|regex_match[/^[A-Z]{2}$/]',
+                'rules' => 'required|exact_length[2]|in_list[BL,PL,OP,BH,SH,GD,OT]',
                 'errors' => [
                     'required' => 'Поле loadType обязательно.',
                     'exact_length' => 'loadType должен быть длиной 2 символа.',
-                    'regex_match' => 'loadType должен быть двумя заглавными буквами.'
+                    'in_list' => 'loadType должен быть одним из следующих значений: BL, PL, OP, BH, SH, GD, OT.'
                 ]
             ],
             'actionType' => [
                 'label' => 'actionType',
-                'rules' => 'required|exact_length[1]|regex_match[/^[A-Z]$/]',
+                'rules' => 'required|in_list[N,M,E,C]|exact_length[1]',
                 'errors' => [
                     'required' => 'Поле actionType обязательно.',
+                    'in' => 'actionType должен быть одним из: N, M, E, C.',
                     'exact_length' => 'actionType должен быть длиной 1 символ.',
-                    'regex_match' => 'actionType должен быть одной заглавной буквой.'
                 ]
             ],
         ];
+    }
+
+    /**
+     * Кастомная функция валидации для полей с типами (ace, lei, bic, eic, gln)
+     *
+     * @param string $str Значение поля (например, reportingEntityID)
+     * @param string|null $fields $fields Имя поля с типом (например, reportingEntityType)
+     * @param array $data Все данные формы
+     * @return bool
+     */
+    public function validateEntityId(string $str, ?string $fields, array $data): bool
+    {
+        if (!isset($data[$fields])) {
+            return false;
+        }
+
+        $type = $data[$fields];
+
+        return match ($type) {
+            'ace' => strlen($str) === 12 && preg_match('/^[A-Za-z0-9_]+\.[A-Z]{2}$/', $str),
+            'lei' => strlen($str) === 20 && preg_match('/^[A-Za-z0-9_]+$/', $str),
+            'bic' => strlen($str) === 11 && preg_match('/^[A-Za-z0-9_]+$/', $str),
+            'eic' => strlen($str) === 16 && preg_match('/^[0-9]{2}[XYZTWV].+$/', $str),
+            'gln' => strlen($str) === 13 && preg_match('/^[A-Za-z0-9_]+$/', $str),
+            default => false,
+        };
     }
 }
