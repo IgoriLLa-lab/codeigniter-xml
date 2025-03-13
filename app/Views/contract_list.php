@@ -65,7 +65,8 @@
                 <?php foreach ($contracts as $contract): ?>
                     <tr>
                         <td><?php echo $count++; ?></td>
-                        <td><?php echo date('Ymd', strtotime($contract['contract_date'])) . '_REMITTable2_V1_' . $contract['id'] . '.xml'; ?></td>                        <td><?php echo $contract['created_at']; ?></td>
+                        <td><?php echo date('Ymd', strtotime($contract['contract_date'])) . '_REMITTable2_V1_' . $contract['id'] . '.xml'; ?></td>
+                        <td><?php echo $contract['created_at']; ?></td>
                         <td>
                             <a href="/contracts/edit/<?php echo $contract['id']; ?>" class="action-link">
                                 <i class="bi bi-pencil text-black"></i>
