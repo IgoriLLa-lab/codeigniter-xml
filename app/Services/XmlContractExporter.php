@@ -27,8 +27,10 @@ class XmlContractExporter implements ContractExporterInterface
         $doc->appendChild($root);
 
         $reportingEntityID = $doc->createElement('reportingEntityID');
-        $ace = $doc->createElement('ace', $contract['reporting_entity_id']);
-        $reportingEntityID->appendChild($ace);
+        $reportingEntityType = $contract['reporting_entity_type'] ?? '';
+        $reportingEntityID->appendChild(
+            $doc->createElement($reportingEntityType, $contract['reporting_entity_id'] ?? '')
+        );
         $root->appendChild($reportingEntityID);
 
         $tradeList = $doc->createElement('TradeList');
@@ -40,11 +42,17 @@ class XmlContractExporter implements ContractExporterInterface
         $this->addSimpleElement($doc, $report, 'RecordSeqNumber', $contract['record_seq_number']);
 
         $idOfMP = $doc->createElement('idOfMarketParticipant');
-        $idOfMP->appendChild($doc->createElement('ace', $contract['id_of_market_participant']));
+        $idOfMPType = $contract['id_of_market_participant_type'] ?? '';
+        $idOfMP->appendChild(
+            $doc->createElement($idOfMPType, $contract['id_of_market_participant'] ?? '')
+        );
         $report->appendChild($idOfMP);
 
         $otherMP = $doc->createElement('otherMarketParticipant');
-        $otherMP->appendChild($doc->createElement('ace', $contract['other_market_participant']));
+        $otherMPType = $contract['other_market_participant_type'] ?? 'ace';
+        $otherMP->appendChild(
+            $doc->createElement($otherMPType, $contract['other_market_participant'] ?? '')
+        );
         $report->appendChild($otherMP);
 
         $this->addSimpleElement($doc, $report, 'tradingCapacity', $contract['trading_capacity']);
@@ -66,7 +74,7 @@ class XmlContractExporter implements ContractExporterInterface
         $report->appendChild($notionalAmount);
 
         $quantity = $doc->createElement('totalNotionalContractQuantity');
-        $quantity->appendChild($doc->createElement('value', '0')); // As per standard
+        $quantity->appendChild($doc->createElement('value', '0'));
         $quantity->appendChild($doc->createElement('unit', $contract['estimated_notional_amount_unit']));
         $report->appendChild($quantity);
 
@@ -93,7 +101,7 @@ class XmlContractExporter implements ContractExporterInterface
             ob_end_clean();
         }
 
-        $date = date('Ymd', strtotime($contract['contract_date'])); // Преобразуем дату в формат YYYYMMDD
+        $date = date('Ymd', strtotime($contract['contract_date']));
         $filename = "{$date}_REMITTable2_V1_{$contract['id']}.xml";
 
         header('Content-Type: application/xml; charset=UTF-8');
