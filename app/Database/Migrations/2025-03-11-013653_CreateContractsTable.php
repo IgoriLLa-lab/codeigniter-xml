@@ -18,7 +18,7 @@ class CreateContsctsTable extends Migration
             ],
             'reporting_entity_id' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 12,
+                'constraint' => 20,
                 'null'       => false,
             ],
             'reporting_entity_type' => [
@@ -32,7 +32,7 @@ class CreateContsctsTable extends Migration
             ],
             'id_of_market_participant' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 12,
+                'constraint' => 20,
                 'null'       => false,
             ],
             'id_of_market_participant_type' => [
@@ -42,7 +42,7 @@ class CreateContsctsTable extends Migration
             ],
             'other_market_participant' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 12,
+                'constraint' => 20,
                 'null'       => false,
             ],
             'other_market_participant_type' => [
