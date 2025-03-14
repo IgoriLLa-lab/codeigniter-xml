@@ -56,6 +56,11 @@ database.default.port=5432
 docker-compose up --build -d
 ```
 
+Запустите миграции в контейнере докер 
+```
+docker exec -it codeigniter-xml php spark migrate --all
+```
+
 ## Запустите приложение
 
 Откройте браузер и перейдите по адресу:
